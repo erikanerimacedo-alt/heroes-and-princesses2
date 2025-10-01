@@ -1,4 +1,16 @@
 body{
     background-color: rgb(113, 220, 151);
     color: rgb(124, 2, 25);
+    text-align: center;
+    margin: 80px 0;
+    font-size: medium;
+
 }
+main{
+    max-width: 90%;
+}
+ button{
+    background-color: antiquewhite;
+    color: aliceblue;
+    padding: 10px;
+ }
