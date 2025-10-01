@@ -7,10 +7,10 @@ body{
 
 }
 main{
-    max-width: 90%;
+    max-width: 100%;
 }
  button{
     background-color: antiquewhite;
     color: rgb(5, 54, 97);
     padding: 10px;
- }
+ }.
