@@ -14,3 +14,15 @@ main{
     color: rgb(5, 54, 97);
     padding: 10px;
  }.
+
+ .img01{
+width: 30%;
+ }
+
+ .passo{
+    display: none;
+ }
+
+ .passo.ativo{
+    display: block;
+ }
