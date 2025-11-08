@@ -8,189 +8,225 @@
 </head>
 <body>
     <main>
-    <div class="passo ativo" id="passo-0">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>O Multiverso está se desintegrando. Merida, Mulan e o Homem-Aranha (Peter Parker) foram convocados pela entidade temporal Eon. O destino de todas as realidades, incluindo o universo dos Vingadores, depende de quatro decisões críticas para fechar o Nexus Final.
-Eon: “O tempo está correndo. Cada escolha que fizerem define se o tecido da realidade se curará ou se romperá de vez. Avancem!”
+   <div id="app" class="container-story w-full p-6 md:p-10 rounded-xl">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-center hero-title">
+            O Colapso do Multiverso
+        </h1>
+        <p class="text-lg text-center mb-8 text-gray-400">Merida, Mulan e Homem-Aranha: O Destino em Suas Mãos.</p>
 
-DECISÃO 1: O VÓRTICE INICIAL (Segurança vs. Risco)
-O primeiro portal se abre, mas ele está sugando a energia da base de Eon, ameaçando paralisar os heróis antes mesmo de começarem.
-    
-</p>
-        <button class="btn-proximo" data-proximo="1">. Estratégia de Mulan: Usar a engenharia de Eon para criar um campo de amortecimento lento e controlado, priorizando a segurança.</button>
-        <button class="btn-proximo" data-proximo="2">.  Ação do Homem-Aranha: Lançar um pulso de sobrecarga no portal para fechá-lo rapidamente, um risco calculado.
-</button>
+        <div id="story-content" class="text-lg mb-8 p-4 bg-gray-800/50 rounded-lg border border-gray-700/50">
+            <!-- Story content will be injected here -->
+            <div id="main-text"></div>
+        </div>
+
+        <div id="decision-buttons" class="flex flex-col space-y-4">
+            <!-- Buttons will be injected here -->
+        </div>
+
+        <div id="path-indicator" class="mt-8 text-center text-sm text-gray-500">
+            Caminho Atual: <span id="current-path">Nenhum</span>
+        </div>
     </div>
 
+    <script>
+        // Variável de estado para rastrear o caminho de decisão (A/B)
+        let path = [];
+        const maxDecisions = 4;
+
+        // Estrutura de dados para o conteúdo da história e as opções de decisão
+        const storyData = {
+            // PONTO DE DECISÃO 1
+            'start': {
+                text: `
+                    O Multiverso colapsa. Merida, Mulan e o Homem-Aranha são convocados por Eon. A primeira ameaça é um vórtice que se abre na base.
+                    <br><br>O grupo precisa estabilizar o portal para poder partir.
+                    <br><strong class="text-yellow-400">Ponto de Decisão 1: O Vórtice Inicial</strong>
+                `,
+                buttons: [
+                    { label: 'A. Estratégia de Mulan: Campo de amortecimento lento e controlado (Segurança).', next: 'D1-A', value: 'A' },
+                    { label: 'B. Ação do Homem-Aranha: Lançar um pulso de sobrecarga para fechá-lo rapidamente (Velocidade).', next: 'D1-B', value: 'B' }
+                ]
+            },
+            // PONTO DE DECISÃO 2
+            'D1-A': { // Seção 2: O Caminho da Estabilidade
+                text: `
+                    <strong class="text-green-400">Seção 2: O Caminho da Estabilidade.</strong> O campo de amortecimento de Mulan funcionou, mas levou um tempo precioso.
+                    <br>Eles chegam ao universo de Thanos. O artefato precisa ser neutralizado antes que o feedback atinja a equipe.
+                    <br><br><strong class="text-yellow-400">Ponto de Decisão 2: O Artefato de Thanos</strong>
+                `,
+                buttons: [
+                    { label: 'A. Merida: Lógica Mística: Usar símbolos de ligação temporal arcaicos para neutralizar o artefato com precisão.', next: 'D2-A', value: 'A' },
+                    { label: 'B. Vingadores: Força de Combate: Usar pulso de energia concentrada para destruir o artefato imediatamente.', next: 'D2-B', value: 'B' }
+                ]
+            },
+            'D1-B': { // Seção 3: O Caminho da Velocidade
+                text: `
+                    <strong class="text-green-400">Seção 3: O Caminho da Velocidade.</strong> O risco compensou e o pulso do Homem-Aranha fechou o portal rapidamente.
+                    <br>Eles chegam ao universo de Thanos. O artefato precisa ser neutralizado antes que o feedback atinja a equipe.
+                    <br><br><strong class="text-yellow-400">Ponto de Decisão 2: O Artefato de Thanos</strong>
+                `,
+                buttons: [
+                    { label: 'A. Merida: Lógica Mística: Usar símbolos de ligação temporal arcaicos para neutralizar o artefato com precisão.', next: 'D2-A', value: 'A' },
+                    { label: 'B. Vingadores: Força de Combate: Usar pulso de energia concentrada para destruir o artefato imediatamente.', next: 'D2-B', value: 'B' }
+                ]
+            },
+            // PONTO DE DECISÃO 3
+            'D2-A': { // Continua de D1-A ou D1-B
+                text: `
+                    As ações do grupo foram precisas. Loki confronta o grupo com uma ilusão que só pode ser quebrada pela verdade ou pelo engano.
+                    <br><br><strong class="text-yellow-400">Ponto de Decisão 3: O Desafio de Loki</strong>
+                `,
+                buttons: [
+                    { label: 'A. Mulan: Convicção Moral: Recusa-se a atacar a ilusão, apelando para a honra.', next: 'D3-A', value: 'A' },
+                    { label: 'B. Merida: Astúcia de Ação: Ataca o ponto mais improvável da ilusão, forçando a reação.', next: 'D3-B', value: 'B' }
+                ]
+            },
+            'D2-B': { // Continua de D1-A ou D1-B
+                text: `
+                    O poder de combate prevaleceu. Loki os ataca com uma ilusão traiçoeira, forçando uma reação.
+                    <br><br><strong class="text-yellow-400">Ponto de Decisão 3: O Desafio de Loki</strong>
+                `,
+                buttons: [
+                    { label: 'A. Mulan: Convicção Moral: Recusa-se a atacar a ilusão, apelando para a honra.', next: 'D3-A', value: 'A' },
+                    { label: 'B. Merida: Astúcia de Ação: Ataca o ponto mais improvável da ilusão, forçando a reação.', next: 'D3-B', value: 'B' }
+                ]
+            },
+            // PONTO DE DECISÃO 4 (FINAL)
+            'D3-A': { // Continua de D2-A ou D2-B
+                text: `
+                    A moralidade venceu o engano de Loki. O grupo chega ao Núcleo de Ultron. As decisões até aqui favoreceram a diplomacia e a precisão.
+                    <br><br><strong class="text-red-400">Ponto de Decisão 4: O Núcleo de Ultron (Final)</strong>
+                `,
+                buttons: [
+                    { label: 'A. Homem-Aranha: Reinicialização: Tentar reescrever o código com uma IA benigna.', next: 'end', value: 'A' },
+                    { label: 'B. Vingadores: Aniquilação: Destruir o Núcleo com explosão concentrada.', next: 'end', value: 'B' }
+                ]
+            },
+            'D3-B': { // Continua de D2-A ou D2-B
+                text: `
+                    A astúcia de Merida quebrou a ilusão. O grupo chega ao Núcleo de Ultron. As decisões até aqui foram de inteligência e engano.
+                    <br><br><strong class="text-red-400">Ponto de Decisão 4: O Núcleo de Ultron (Final)</strong>
+                `,
+                buttons: [
+                    { label: 'A. Homem-Aranha: Reinicialização: Tentar reescrever o código com uma IA benigna.', next: 'end', value: 'A' },
+                    { label: 'B. Vingadores: Aniquilação: Destruir o Núcleo com explosão concentrada.', next: 'end', value: 'B' }
+                ]
+            },
+        };
+
+        // Estrutura de dados para os 16 finais
+        const endings = {
+            'A-A-A-A': { id: 1, title: 'União Perfeita', summary: 'As escolas se unem em uma Academia de Guardiões do Tempo. Vingadores são a elite de combate desta nova ordem.' },
+            'A-A-A-B': { id: 2, title: 'Amnésia Temporal', summary: 'A Aniquilação (B) no final faz com que os Vingadores percam a memória de terem sido salvos. O tempo está incerto.' },
+            'A-A-B-A': { id: 3, title: 'Triunfo da Astúcia', summary: 'Merida e a Lógica vencem. Homem-Aranha se torna o líder estratégico dos Vingadores, que abandonam o combate em massa.' },
+            'A-A-B-B': { id: 4, title: 'O Fim de Eon', summary: 'O feedback da Aniquilação destrói Eon. Merida e Mulan se tornam as novas Guardiãs do Tempo. Os Vingadores perdem seu elo temporal.' },
+            'A-B-A-A': { id: 5, title: 'Paz Tecnológica', summary: 'Força controlada. As escolas se unem sob a bandeira da Ciência e da Moralidade. Vingadores viram consultores de segurança.' },
+            'A-B-A-B': { id: 6, title: 'O Preço da Ordem', summary: 'A Aniquilação causa a perda de metade da tecnologia dos Vingadores. A Escola Heróica tem um grande retrocesso.' },
+            'A-B-B-A': { id: 7, title: 'A Revolta de Loki', summary: 'Loki escapa e lança um vírus no sistema de defesa dos Vingadores, inspirado pela Astúcia (B). A ameaça nunca acaba.' },
+            'A-B-B-B': { id: 8, title: 'Vazio da Magia', summary: 'Força e Aniquilação eliminam todos os elementos místicos. A Academia Valente se desfaz.' },
+            'B-A-A-A': { id: 9, title: 'Paradoxo Suave', summary: 'O Multiverso é salvo, mas o tempo se "mistura". Os Vingadores resgatam versões adolescentes de si mesmos.' },
+            'B-A-A-B': { id: 10, title: 'Retorno do Vilão', summary: 'Loki usa a velocidade para fugir e se infiltra no universo dos Vingadores como aliado.' },
+            'B-A-B-A': { id: 11, title: 'Era do Homem-Aranha', summary: 'Velocidade e Astúcia provam ser o melhor caminho. O Homem-Aranha é nomeado líder do Conselho Interdimensional dos Vingadores.' },
+            'B-A-B-B': { id: 12, title: 'Sacrifício do Poder', summary: 'A Aniquilação causa a perda de metade do poder de combate dos Vingadores. A Estratégia de Mulan se torna o foco.' },
+            'B-B-A-A': { id: 13, title: 'Rivalidade Constante', summary: 'Força e Alto Risco salvam o dia, mas as escolas e os Vingadores se dividem em duas facções que não confiam uma na outra.' },
+            'B-B-A-B': { id: 14, title: 'Custo de Sangue', summary: 'A Aniquilação e a Força causam a perda de metade da população do universo dos Vingadores. O tempo é salvo, mas o custo é amargo.' },
+            'B-B-B-A': { id: 15, title: 'Legado de Ultron', summary: 'A Força e a Astúcia falham. O Núcleo de Ultron se multiplica. O Multiverso está condenado pela IA.' },
+            'B-B-B-B': { id: 16, title: 'Aniquilação Final', summary: 'A sequência de Destruição Máxima. O Nexus Final implode. Todos os heróis e o Multiverso são apagados da existência.' }
+        };
+
+        // Função para calcular a próxima chave de estado
+        function getNextStateKey() {
+            if (path.length === 0) return 'start';
+            
+            // D1-A ou D1-B
+            if (path.length === 1) return `D1-${path[0]}`;
+            
+            // D2-A ou D2-B (dependendo do segundo segmento)
+            if (path.length === 2) return `D2-${path[1]}`;
+
+            // D3-A ou D3-B (dependendo do terceiro segmento)
+            if (path.length === 3) return `D3-${path[2]}`;
+            
+            // Se path.length for 4, é o final.
+            if (path.length === 4) return 'end';
+            
+            return 'start'; // Fallback
+        }
+
+        // Função para exibir o final
+        function displayEnding() {
+            const finalPath = path.join('-');
+            const ending = endings[finalPath];
+
+            const contentDiv = document.getElementById('story-content');
+            const buttonsDiv = document.getElementById('decision-buttons');
+            
+            contentDiv.innerHTML = `
+                <p class="text-xl font-bold text-center mb-4 text-blue-400">FIM DA MISSÃO</p>
+                <h2 class="text-3xl font-extrabold text-center mb-6 text-yellow-400">Final ${ending.id}: ${ending.title}</h2>
+                <p class="text-lg text-center leading-relaxed">
+                    ${ending.summary}
+                </p>
+                <p class="mt-6 text-center text-sm text-gray-500">Caminho da Decisão: ${finalPath}</p>
+            `;
+            buttonsDiv.innerHTML = `
+                <button onclick="resetGame()" class="btn-decision w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white shadow-lg">
+                    Recomeçar a Jornada Multiversal
+                </button>
+            `;
+            document.getElementById('path-indicator').innerHTML = `<span class="text-green-500">Jornada Concluída!</span>`;
+        }
+
+        // Função principal de renderização
+        function renderStory() {
+            const stateKey = getNextStateKey();
+            const currentData = storyData[stateKey];
+            const contentDiv = document.getElementById('main-text');
+            const buttonsDiv = document.getElementById('decision-buttons');
+            const pathIndicator = document.getElementById('current-path');
+
+            pathIndicator.textContent = path.join(' → ') || 'Nenhum';
+            
+            if (stateKey === 'end') {
+                displayEnding();
+                return;
+            }
+
+            // Atualiza o texto da história
+            contentDiv.innerHTML = currentData.text;
+
+            // Atualiza os botões
+            buttonsDiv.innerHTML = '';
+            currentData.buttons.forEach(button => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-decision w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 rounded-lg text-white shadow-md';
+                btn.textContent = button.label;
+                btn.onclick = () => handleDecision(button.value);
+                buttonsDiv.appendChild(btn);
+            });
+        }
+
+        // Função de tratamento de clique no botão de decisão
+        function handleDecision(value) {
+            path.push(value);
+            
+            if (path.length > maxDecisions) {
+                // Isso não deve acontecer, mas é uma proteção
+                path.pop();
+            }
+
+            renderStory();
+        }
+
+        // Função para reiniciar o jogo
+        function resetGame() {
+            path = [];
+            renderStory();
+        }
+
+        // Inicia a história ao carregar a página
+        window.onload = resetGame;
+    </script>
 
-
-
-
-
-
-
-
-    <div class="passo" id="passo-1">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>A segurança foi mantida, mas a missão está atrasada. O grupo chega ao universo de Thanos, onde um artefato perigoso precisa ser neutralizado.
-Ponto de Decisão 2: O Artefato de Thanos
-Se você escolher:
-    
-</p>
-        <button class="btn-proximo" data-proximo="11">.  Merida: Lógica Mística: Usar símbolos de ligação temporal arcaicos para neutralizar o artefato com precisão.</button>
-        <button class="btn-proximo" data-proximo="12">.  Vingadores: Força de Combate: Usar pulso de energia concentrada para destruir o artefato imediatamente.</button>
-    </div>
-
-
-
-
-
-
-    <div class="passo" id="passo-2">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>O risco compensou e o portal fechou rapidamente. No universo de Thanos, o artefato precisa ser neutralizado antes que o feedback atinja a equipe.
-Ponto de Decisão 2: O Artefato de Thanos
-
-        <button class="btn-proximo" data-proximo="21">. Merida: Lógica Mística: Usar símbolos de ligação temporal arcaicos para neutralizar o artefato com precisão.
-</button>
-        <button class="btn-proximo" data-proximo="22">. Vingadores: Força de Combate: Usar pulso de energia concentrada para destruir o artefato imediatamente.
-</button>
-    </div>
-
-
-
-
-
-
-
-    <div class="passo" id="passo-11">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>As duas heroínas guiaram o caminho até agora. Loki confronta o grupo com uma ilusão que só pode ser quebrada pela verdade ou pelo engano.
-Ponto de Decisão 3: O Desafio de Loki
-
-    
-</p>
-        <button class="btn-proximo" data-proximo="111">.  Mulan: Convicção Moral: Recusa-se a atacar a ilusão, apelando para a honra.
-</button>
-        <button class="btn-proximo" data-proximo="112">.  Merida: Astúcia de Ação: Ataca o ponto mais improvável da ilusão, forçando a reação.
-</button>
-    </div>
-
-
-
-
-
-
-    </main>
-    <script src="./main.js"></script>
-
-     <div class="passo" id="passo-12">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>O caminho tem sido de alto risco e poder. A ilusão de Loki tenta explorar a agressividade do grupo.
-Ponto de Decisão 3: O Desafio de Loki
-
-    
-</p>
-        <button class="btn-proximo" data-proximo="112">. Mulan: Convicção Moral: Recusa-se a atacar a ilusão, apelando para a honra.</button>
-        <button class="btn-proximo" data-proximo="122">. Merida: Astúcia de Ação: Ataca o ponto mais improvável da ilusão, forçando a reação.</button>
-    </div>
-
-
-
-
-
-    <div class="passo" id="passo-21">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>A força dos Vingadores e a estabilidade de Mulan venceram. Loki os ataca com uma ilusão traiçoeira, forçando uma reação.
-Ponto de Decisão 3: O Desafio de Loki
-
-
-        <button class="btn-proximo" data-proximo="211">. Mulan: Convicção Moral: Recusa-se a atacar a ilusão, apelando para a honra.
-
-</button>
-        <button class="btn-proximo" data-proximo="222">. Merida: Astúcia de Ação: Ataca o ponto mais improvável da ilusão, forçando a reação.
-</button>
-    </div>
-
-
-
-
-
-     <div class="passo" id="passo-22">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>A missão é rápida e precisa. A ilusão de Loki tenta forçá-los a desperdiçar tempo.
-Ponto de Decisão 3: O Desafio de Loki
-
-
-
-        <button class="btn-proximo" data-proximo="2111">. Mulan: Convicção Moral: Recusa-se a atacar a ilusão, apelando para a honra.
-
-</button>
-        <button class="btn-proximo" data-proximo="2222">. Merida: Astúcia de Ação: Ataca o ponto mais improvável da ilusão, forçando a reação.
-</button>
-    </div>
-
-
-
-
-     <div class="passo" id="passo-111">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>O grupo chega ao Núcleo de Ultron. As decisões até aqui favoreceram a diplomacia e a precisão. O que fazer com o Núcleo?
-Ponto de Decisão 4: O Núcleo de Ultron
-
-</p>
-        <button class="btn-proximo" data-proximo="1111">. Homem-Aranha: Reinicialização: Tentar reescrever o código com uma IA benigna.
-</button>
-        <button class="btn-proximo" data-proximo="1122">.  Vingadores: Aniquilação: Destruir o Núcleo com explosão concentrada.
-</button>
-    </div>
-
-
-
-
-
-    <div class="passo" id="passo-122">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>O caminho tem sido de alto risco e poder. A ilusão de Loki tenta explorar a agressividade do grupo.
-Ponto de Decisão 3: O Desafio de Loki
-
-    
-</p>
-        <button class="btn-proximo" data-proximo="1122">. Homem-Aranha: Reinicialização: Tentar reescrever o código com uma IA benigna.</button>
-        <button class="btn-proximo" data-proximo="1222">.Vingadores: Aniquilação: Destruir o Núcleo com explosão concentrada </button>
-    </div>
-
-
-
-     <div class="passo" id="passo-211">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>A missão foi de poder controlado e convicção. A força de vontade contra Ultron é crucial.
-Ponto de Decisão 4: O Núcleo de Ultron
-
-
-
-        <button class="btn-proximo" data-proximo="2111">. Homem-Aranha: Reinicialização: Tentar reescrever o código com uma IA benigna.
-
-</button>
-        <button class="btn-proximo" data-proximo="2222">. Vingadores: Aniquilação: Destruir o Núcleo com explosão concentrada. 
-</button>
-    </div>
-
-
-
-      <div class="passo" id="passo-222">
-        <img src="./DunBroch_Castle.webp" alt="">
-        <p>Força e Astúcia. O que farão no confronto final? A destruição é o caminho ou a criação?
-Ponto de Decisão 4: O Núcleo de Ultron 
-
-
-
-
-        <button class="btn-proximo" data-proximo="21111">. Homem-Aranha: Reinicialização: Tentar reescrever o código com uma IA benigna.
-
-</button>
-        <button class="btn-proximo" data-proximo="22222">.  Vingadores: Aniquilação: Destruir o Núcleo com explosão concentrada.
-</button>
-    </div>
 </body>
 </html>
